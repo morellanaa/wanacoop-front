@@ -1,5 +1,12 @@
 <template>
-  <div class="about">
-    <h1>Map Overview</h1>
+  <div>
+    Map
   </div>
 </template>
+
+<script>
+</script>
+
+<style scoped>
+
+</style>

@@ -1,5 +1,6 @@
 <template>
-  <div class="about">
-    <h1>Protest Nav</h1>
-  </div>
+  <div>ProtestNav</div>
 </template>
+
+<script>
+</script>
