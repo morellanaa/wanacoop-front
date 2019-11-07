@@ -1,5 +1,6 @@
 <template>
   <div>
-    <h1>Panic Button</h1>
+    <br>
+    <h1>Botón de Pánico</h1>
   </div>
 </template>

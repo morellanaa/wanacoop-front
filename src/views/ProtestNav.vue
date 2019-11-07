@@ -1,6 +1,6 @@
 <template>
-  <div>ProtestNav</div>
+  <div>
+    <br>
+    <h1>Protestas</h1>
+  </div>
 </template>
-
-<script>
-</script>

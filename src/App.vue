@@ -3,16 +3,16 @@
 		<div id="nav">
 			<b-navbar toggleable="sm" type="light" variant="light">
 				<b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
-				<b-navbar-brand to="/">Wanacoop</b-navbar-brand>
+				<b-navbar-brand to="/">WANACOOP</b-navbar-brand>
 				<b-collapse id="nav-text-collapse" is-nav>
 					<b-navbar-nav>
-						<b-nav-item to="/panicbutton">Panic Button</b-nav-item>
-						<b-nav-item to="/map">Map Overview</b-nav-item>
-						<b-nav-item to="/protestnav">Protest Nav</b-nav-item>
+						<b-nav-item to="/panicbutton">Botón de Pánico</b-nav-item>
+						<b-nav-item to="/map">Mapa</b-nav-item>
+						<b-nav-item to="/protestnav">Protestas</b-nav-item>
 					</b-navbar-nav>
 				</b-collapse>
 			</b-navbar>
-		</div><br>
+		</div>
     <router-view/>
   </div>
 </template>
