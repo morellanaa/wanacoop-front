@@ -12,11 +12,33 @@ export default {
   name: "LeafletMap",
   data() {
     return {
+      owo: null,
       map: null
     };
   },
+  created() {
+    console.log(this.owo);
+    if(!("geolocation" in navigator)) {
+      this.errorStr = 'Geolocation is not available.';
+      return;
+    }
+
+    this.gettingLocation = true;
+    this.pos = navigator.geolocation.getCurrentPosition(pos => {
+      this.gettingLocation = false;
+      this.pos = pos;
+    }, err => {
+      this.gettingLocation = false;
+      this.errorStr = err.message;
+    });
+  },
   mounted() {
-    this.map = L.map("map").setView([-36.8232844,-73.0448676], 24);
+    console.log('owo:'+this.pos);
+    if (this.gettingLocation) {
+      this.map = L.map("map", {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
+    } else {
+      this.map = L.map("map").setView([-36.8229,-73.0448], 24);
+    }
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -31,6 +53,7 @@ export default {
     });
     L.marker([-36.8229,-73.0448], {icon: closedIcon}).addTo(this.map);
     L.marker([-36.8216,-73.0448], {icon: guanacoIcon}).addTo(this.map);
+    L.circle([this.pos.coords.latitude, this.pos.coords.longitude], {radius: 15}).addTo(this.map);
   },
   beforeDestroy() {
     if (this.map) {
