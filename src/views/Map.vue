@@ -17,7 +17,6 @@ export default {
     };
   },
   created() {
-    console.log(this.owo);
     if(!("geolocation" in navigator)) {
       this.errorStr = 'Geolocation is not available.';
       return;
@@ -33,7 +32,6 @@ export default {
     });
   },
   mounted() {
-    console.log('owo:'+this.pos);
     if (this.gettingLocation) {
       this.map = L.map("map", {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
     } else {
