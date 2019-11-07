@@ -1,5 +1,7 @@
 <template>
-  <div id="map"></div>
+  <div id="map">
+    <div id="circle"></div>
+  </div>
 </template>
 
 <script>
@@ -19,6 +21,7 @@ export default {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+    L.circle([-36.820, -73.044], {radius: 200}).addTo(this.map);
   },
   beforeDestroy() {
     if (this.map) {
