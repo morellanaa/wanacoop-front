@@ -1,6 +1,5 @@
 <template>
   <div id="map">
-    <div id="circle"></div>
   </div>
 </template>
 
@@ -12,7 +11,9 @@ export default {
   name: "LeafletMap",
   data() {
     return {
-      owo: null,
+      location:null,
+      gettingLocation: false,
+      errorStr:null,
       map: null
     };
   },
@@ -21,21 +22,20 @@ export default {
       this.errorStr = 'Geolocation is not available.';
       return;
     }
-
     this.gettingLocation = true;
-    this.pos = navigator.geolocation.getCurrentPosition(pos => {
+    navigator.geolocation.getCurrentPosition(pos => {
       this.gettingLocation = false;
-      this.pos = pos;
+      this.location = pos;
     }, err => {
       this.gettingLocation = false;
       this.errorStr = err.message;
-    });
+    })
   },
   mounted() {
     if (this.gettingLocation) {
       this.map = L.map("map", {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
     } else {
-      this.map = L.map("map").setView([-36.8229,-73.0448], 24);
+      this.map = L.map("map").setView([0,0], 24);
     }
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution:
