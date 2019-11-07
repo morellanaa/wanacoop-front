@@ -16,12 +16,21 @@ export default {
     };
   },
   mounted() {
-    this.map = L.map("map").setView([-36.820, -73.044], 12);
+    this.map = L.map("map").setView([-36.8232844,-73.0448676], 24);
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-    L.circle([-36.820, -73.044], {radius: 200}).addTo(this.map);
+    var closedIcon = L.icon({
+      iconUrl: 'https://i.imgur.com/vfhgCUG.png',
+      iconSize: [32, 32]
+    });
+    var guanacoIcon = L.icon({
+      iconUrl: 'https://i.imgur.com/0ydOdUp.png',
+      iconSize: [32, 32]
+    });
+    L.marker([-36.8229,-73.0448], {icon: closedIcon}).addTo(this.map);
+    L.marker([-36.8216,-73.0448], {icon: guanacoIcon}).addTo(this.map);
   },
   beforeDestroy() {
     if (this.map) {
