@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div id="map">
-    </div>
+    <b-row>
+      <b-col>
+      <div id="map"></div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -13,7 +16,8 @@ export default {
   name: "LeafletMap",
   data() {
     return {
-      geopos: null,
+      rtl: true,
+      rtltext: 'Desactivar',
       map: null
     };
   },
@@ -45,6 +49,10 @@ export default {
       iconUrl: 'https://i.imgur.com/0XObLbV.png',
       iconSize: [32, 32]
     });
+    var patrullaIcon = L.icon({
+      iconUrl: 'https://i.imgur.com/igrHsR1.png',
+      iconSize: [32, 32]
+    });
 
     function onLocationFound(e) {
       layerGroup.clearLayers();
@@ -52,16 +60,18 @@ export default {
       L.marker(e.latlng, {icon: userIcon}).addTo(layerGroup)
       L.circle(e.latlng, radius).addTo(layerGroup);
     }
-    map.on('locationfound', onLocationFound);
-    map.locate({setView: true, watch: true, maxZoom: 16});
+    if (this.rtl) {
+      map.on('locationfound', onLocationFound);
+      map.locate({setView: true, watch: true, maxZoom: 16});
+    }
 
-    L.marker([-36.8272,-73.0338], {icon: closedIcon}).addTo(map);
-    L.marker([-36.8272,-73.0338], {icon: guanacoIcon}).addTo(map);
-    L.marker([-36.8272,-73.0338], {icon: pacosIcon}).addTo(map);
-    L.marker([-36.8272,-73.0338], {icon: helpIcon}).addTo(map);
+    L.marker([-36.8272,-73.0398], {icon: closedIcon}).addTo(map);
+    L.marker([-36.8247,-73.0398], {icon: guanacoIcon}).addTo(map);
+    L.marker([-36.8272,-73.0458], {icon: pacosIcon}).addTo(map);
+    L.marker([-36.8292,-73.0378], {icon: helpIcon}).addTo(map);
+    L.marker([-36.8250,-73.0382], {icon: helpIcon}).addTo(map);
+    L.marker([-36.8262,-73.0378], {icon: patrullaIcon}).addTo(map);
     this.map = map
-  },
-  updated() {
   },
   beforeDestroy() {
     if (this.map) {
