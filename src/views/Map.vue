@@ -13,40 +13,22 @@ export default {
   name: "LeafletMap",
   data() {
     return {
-      lat: 1,
-      lng: 2,
+      geopos: null,
       map: null
     };
   },
   mounted() {
-    alert(this.lat+', '+this.lng);
-    navigator.geolocation.getCurrentPosition(
-      function(pos) {
-        var crd = pos.coords;
-        console.log('Your current position is:');
-        console.log('Latitude : ' + crd.latitude);
-        console.log('Longitude: ' + crd.longitude);
-        console.log('More or less ' + crd.accuracy + ' meters.');
-      },
-      function(err) {
-        console.warn('ERROR(' + err.code + '): ' + err.message);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-      }
-    );
-    alert(this.lat+', '+this.lng);
-    if (!this.gettingLocation) {
-      this.map = L.map("map", {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
-    } else {
-      this.map = L.map("map", {doubleClickZoom: false})
-    }
+    var map = L.map("map", {doubleClickZoom: false})
+    var layerGroup = L.layerGroup().addTo(map);
+    var userIcon = L.icon({
+      iconUrl: 'https://i.imgur.com/3AnBYbC.png',
+      iconSize: [32, 32]
+    });
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
+    }).addTo(map);
+
     var closedIcon = L.icon({
       iconUrl: 'https://i.imgur.com/vfhgCUG.png',
       iconSize: [32, 32]
@@ -55,8 +37,31 @@ export default {
       iconUrl: 'https://i.imgur.com/0ydOdUp.png',
       iconSize: [32, 32]
     });
-    L.marker([-36.8229,-73.0448], {icon: closedIcon}).addTo(this.map);
-    L.marker([-36.8216,-73.0448], {icon: guanacoIcon}).addTo(this.map);
+    var pacosIcon = L.icon({
+      iconUrl: 'https://i.imgur.com/g5Cenpx.png',
+      iconSize: [32, 32]
+    });
+    var helpIcon = L.icon({
+      iconUrl: 'https://i.imgur.com/0XObLbV.png',
+      iconSize: [32, 32]
+    });
+
+    function onLocationFound(e) {
+      layerGroup.clearLayers();
+      var radius = e.accuracy / 4;
+      L.marker(e.latlng, {icon: userIcon}).addTo(layerGroup)
+      L.circle(e.latlng, radius).addTo(layerGroup);
+    }
+    map.on('locationfound', onLocationFound);
+    map.locate({setView: true, watch: true, maxZoom: 16});
+
+    L.marker([-36.8272,-73.0338], {icon: closedIcon}).addTo(map);
+    L.marker([-36.8272,-73.0338], {icon: guanacoIcon}).addTo(map);
+    L.marker([-36.8272,-73.0338], {icon: pacosIcon}).addTo(map);
+    L.marker([-36.8272,-73.0338], {icon: helpIcon}).addTo(map);
+    this.map = map
+  },
+  updated() {
   },
   beforeDestroy() {
     if (this.map) {
@@ -69,6 +74,6 @@ export default {
 <style scoped>
 #map {
   width: 100vw;
-  height: 80vh;
+  height: 100vh;
 }
 </style>
